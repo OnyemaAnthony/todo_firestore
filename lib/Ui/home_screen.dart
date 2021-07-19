@@ -11,6 +11,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Your todo items'),
+        centerTitle: true,
       ),
     );
   }
