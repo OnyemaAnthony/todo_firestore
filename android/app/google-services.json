@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "765116573876",
+    "project_id": "todo-firestore-16008",
+    "storage_bucket": "todo-firestore-16008.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:765116573876:android:c59256d8dcf1ecaeabcfe1",
+        "android_client_info": {
+          "package_name": "com.onyema.todo_firestore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "765116573876-k34h46urpu3kmrvmqv3v6n6dgmei82uo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-BLUCEiig59hi7qcWE_d5BmCerNscEP0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "765116573876-k34h46urpu3kmrvmqv3v6n6dgmei82uo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
