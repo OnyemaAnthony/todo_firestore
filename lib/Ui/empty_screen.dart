@@ -13,10 +13,6 @@ class _EmptyScreenState extends State<EmptyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Your todo items'),
-        centerTitle: true,
-      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).accentColor,
         onPressed: () {

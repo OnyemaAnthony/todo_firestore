@@ -65,6 +65,9 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
     try {
       await repository.deleteTodo(event.todoModel, event.id);
+
+
+      yield TodoLoadedState(await repository.fetchAllTodo());
     } catch (e) {
       yield TodoErrorState(e.toString());
     }
