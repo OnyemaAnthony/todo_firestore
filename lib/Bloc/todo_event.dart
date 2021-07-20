@@ -11,3 +11,11 @@ class SaveTodoEvent extends TodoEvent{
   List<Object?> get props => [];
 
 }
+
+class FetchAllTodo extends TodoEvent{
+  @override
+
+  List<Object?> get props =>[];
+
+
+}
