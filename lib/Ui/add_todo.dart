@@ -7,14 +7,32 @@ import 'package:todo_firestore/Utilities/utilities.dart';
 import 'package:todo_firestore/model/TodoModel.dart';
 
 // ignore: must_be_immutable
-class AddTodoScreen extends StatelessWidget {
+class AddTodoScreen extends StatefulWidget {
   final TodoModel todoModel;
+
    AddTodoScreen(this.todoModel);
 
+
+  @override
+  _AddTodoScreenState createState() => _AddTodoScreenState();
+}
+
+
+class _AddTodoScreenState extends State<AddTodoScreen> {
   final _formKey = GlobalKey<FormState>();
- final TextEditingController titleController = TextEditingController();
-final  TextEditingController descriptionController = TextEditingController();
+
+  final TextEditingController titleController = TextEditingController();
+
+  final TextEditingController descriptionController = TextEditingController();
+
   late TodoBloc todoBloc;
+
+  @override
+  void initState() {
+    titleController.text = widget.todoModel.title;
+    descriptionController.text = widget.todoModel.description;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +40,17 @@ final  TextEditingController descriptionController = TextEditingController();
       create: (BuildContext context) => TodoBloc(repository: TodoRepository()),
       child: Scaffold(
         appBar: AppBar(
-          title:todoModel.description ==''?  Text('Add todo'): Text('Edit todo'),
+          title: widget.todoModel.description == ''
+              ? Text('Add todo')
+              : Text('Edit todo'),
           centerTitle: true,
         ),
         body: Builder(
           builder: (BuildContext context) {
             todoBloc = BlocProvider.of<TodoBloc>(context);
             return BlocConsumer<TodoBloc, TodoState>(
-              listener: (context,state){
-                if(state is TodoAddedState){
+              listener: (context, state) {
+                if (state is TodoAddedState) {
                   Utilities.pushReplace(context, HomeScreen());
                 }
               },
@@ -88,18 +108,21 @@ final  TextEditingController descriptionController = TextEditingController();
           onPressed: () {
             submitTodo(context);
           },
-          child: todoModel.description ==''?Text(
-            'Add Todo',
-            style: TextStyle(color: Colors.white),
-          ):Text('Update todo'),
+          child: widget.todoModel.description == ''
+              ? Text(
+                  'Add Todo',
+                  style: TextStyle(color: Colors.white),
+                )
+              : Text('Update todo',style: TextStyle(
+            color: Colors.white
+          ),),
         )
       ],
     );
   }
 
   void submitTodo(BuildContext context) {
-
-    if(todoModel.description ==''){
+    if (widget.todoModel.description == '') {
       todoBloc.add(
         SaveTodoEvent(
           TodoModel(
@@ -110,9 +133,15 @@ final  TextEditingController descriptionController = TextEditingController();
           ),
         ),
       );
-    }else {
-
+    } else {
+      todoBloc.add(UpdateTodoEvent(
+          TodoModel(
+            title: titleController.text,
+            description: descriptionController.text,
+            updatedAt: DateTime.now(),
+            createdAt: DateTime.now(),
+          ),
+          widget.todoModel.id));
     }
-
   }
 }

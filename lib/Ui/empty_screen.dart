@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:todo_firestore/Ui/add_todo.dart';
 import 'package:todo_firestore/Utilities/utilities.dart';
+import 'package:todo_firestore/model/TodoModel.dart';
 
 class EmptyScreen extends StatefulWidget {
   @override
@@ -18,11 +19,19 @@ class _EmptyScreenState extends State<EmptyScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).accentColor,
-
         onPressed: () {
-         Utilities.pushReplace(context,AddTodoScreen());
+          TodoModel todo = TodoModel(
+              title: '',
+              description: '',
+              updatedAt: DateTime.now(),
+              createdAt: DateTime.now());
+
+          Utilities.pushReplace(context, AddTodoScreen(todo));
         },
-        child: Icon(Icons.add,color: Colors.white,),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -35,7 +44,7 @@ class _EmptyScreenState extends State<EmptyScreen> {
               ),
               // SizedBox(height: 10,),
 
-             // Text('Your Todo is empty click on the Button to add new Todo')
+              // Text('Your Todo is empty click on the Button to add new Todo')
             ],
           ),
         ),

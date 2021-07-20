@@ -29,3 +29,15 @@ class UpdateTodoEvent extends TodoEvent{
   List<Object?> get props => [];
 
 }
+
+class DeleteTodoEvent extends TodoEvent{
+  final String id;
+  final TodoModel todoModel;
+
+  DeleteTodoEvent(this.id, this.todoModel);
+
+  @override
+
+  List<Object?> get props => [];
+
+}
