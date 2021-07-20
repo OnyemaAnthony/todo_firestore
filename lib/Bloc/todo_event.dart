@@ -18,3 +18,14 @@ class FetchAllTodo extends TodoEvent {
   List<Object?> get props => [];
 }
 
+class UpdateTodoEvent extends TodoEvent{
+  final TodoModel todoModel;
+  final String id;
+
+  UpdateTodoEvent(this.todoModel,this.id);
+
+  @override
+
+  List<Object?> get props => [];
+
+}

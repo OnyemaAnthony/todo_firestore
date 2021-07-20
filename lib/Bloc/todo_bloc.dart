@@ -22,6 +22,8 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       yield* _mapSaveTodoEventToState(event);
     } else if (event is FetchAllTodo) {
       yield* _mapFetchAllTodToState();
+    }else if (event is UpdateTodoEvent){
+      yield*_mapUpdateTodoToState(event);
     }
   }
 
@@ -43,5 +45,18 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     } catch (e) {
       yield TodoErrorState(e.toString());
     }
+  }
+
+  Stream<TodoState> _mapUpdateTodoToState(UpdateTodoEvent event) async*{
+    yield TodoLoadingState();
+
+    try{
+      await repository.updateTodo(event.todoModel, event.id) ;
+      yield TodoAddedState();
+
+    }catch(e){
+      yield TodoErrorState(e.toString());
+    }
+
   }
 }

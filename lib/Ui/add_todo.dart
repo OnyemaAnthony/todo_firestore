@@ -8,6 +8,9 @@ import 'package:todo_firestore/model/TodoModel.dart';
 
 // ignore: must_be_immutable
 class AddTodoScreen extends StatelessWidget {
+  final TodoModel todoModel;
+   AddTodoScreen(this.todoModel);
+
   final _formKey = GlobalKey<FormState>();
  final TextEditingController titleController = TextEditingController();
 final  TextEditingController descriptionController = TextEditingController();
@@ -19,7 +22,7 @@ final  TextEditingController descriptionController = TextEditingController();
       create: (BuildContext context) => TodoBloc(repository: TodoRepository()),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Add todo'),
+          title:todoModel.description ==''?  Text('Add todo'): Text('Edit todo'),
           centerTitle: true,
         ),
         body: Builder(
@@ -85,16 +88,18 @@ final  TextEditingController descriptionController = TextEditingController();
           onPressed: () {
             submitTodo(context);
           },
-          child: Text(
+          child: todoModel.description ==''?Text(
             'Add Todo',
             style: TextStyle(color: Colors.white),
-          ),
+          ):Text('Update todo'),
         )
       ],
     );
   }
 
   void submitTodo(BuildContext context) {
+
+    if(todoModel.description ==''){
       todoBloc.add(
         SaveTodoEvent(
           TodoModel(
@@ -105,6 +110,9 @@ final  TextEditingController descriptionController = TextEditingController();
           ),
         ),
       );
+    }else {
+
+    }
 
   }
 }

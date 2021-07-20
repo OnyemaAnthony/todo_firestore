@@ -20,23 +20,31 @@ class Utilities {
     );
   }
 
-  static Widget showLoader(String message) {
+  static Widget showLoader(String msg, BuildContext context) {
     return Column(
-      children: [
-        SpinKitWave(),
-        SizedBox(
-          height: 20,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          child: SpinKitWave(
+            color: Theme.of(context).primaryColor,
+            type: SpinKitWaveType.start,
+          ),
         ),
-        Text(message),
+        SizedBox(
+          height: 30,
+        ),
+        Center(child: Text(msg)),
       ],
     );
   }
 
-  static void push(BuildContext context,Widget screen){
-    Navigator.of(context).push(MaterialPageRoute(builder: (_)=>screen));
+  static void push(BuildContext context, Widget screen) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => screen));
   }
 
-  static void pushReplace(BuildContext context,Widget screen){
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>screen));
+  static void pushReplace(BuildContext context, Widget screen) {
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (_) => screen));
   }
 }
