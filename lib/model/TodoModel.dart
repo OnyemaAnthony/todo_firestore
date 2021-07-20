@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TodoModel {
-  late String title;
+  late String? title;
   late String id;
   late String description;
   late DateTime createdAt;
@@ -21,10 +21,10 @@ class TodoModel {
     };
   }
 
-  TodoModel.fromFirestore(DocumentSnapshot todo)
+  TodoModel.fromFirestore(DocumentSnapshot<Map<String, dynamic>>  todo)
       :  id = todo.id,
-        title = (todo.data()['title'],
-        description = todo.data()['description'],
-        createdAt =todo.data()['createdAt'].toDate(),
-        updatedAt =todo.data()['updatedAt'].toDate();
+        title = todo.data()!['title'],
+        description = todo.data()!['description'],
+        createdAt =todo.data()!['createdAt'].toDate(),
+        updatedAt =todo.data()!['updatedAt'].toDate();
 }
