@@ -10,7 +10,6 @@ import 'Bloc/simple_bloc_observer.dart';
 import 'Utilities/utilities.dart';
 
 void main() async {
-
   Bloc.observer = SimpleBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -31,16 +30,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: BlocBuilder<TodoBloc,TodoState>(
-        builder: (BuildContext context,state){
-          if(state is TodoLoadedState){
-            return state.todos.isEmpty ? EmptyScreen(): HomeScreen();
-          }else if(state is TodoErrorState){
+      home: BlocBuilder<TodoBloc, TodoState>(
+        builder: (BuildContext context, state) {
+          if (state is TodoLoadedState) {
+            return state.todos.isEmpty ? EmptyScreen() : HomeScreen();
+          } else if (state is TodoErrorState) {
             Utilities.showToast(state.message);
           }
 
           return Container();
-
         },
       ),
     );

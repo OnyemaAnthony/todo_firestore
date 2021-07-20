@@ -12,7 +12,9 @@ class TodoRepository {
   }
 
   Future<List<TodoModel>> fetchAllTodo() async {
+
     QuerySnapshot<Map<String, dynamic>>  todoList = await FirestoreReference.todoRef.get();
+    print('the size is ${todoList.docs.length}');
     return todoList.docs
         .map((QueryDocumentSnapshot<Map<String, dynamic>>  todo) => TodoModel.fromFirestore(todo))
         .toList();
