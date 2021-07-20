@@ -26,8 +26,9 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   Stream<TodoState> _mapSaveTodoEventToState(SaveTodoEvent event) async* {
     yield TodoLoadingState();
     try {
-      repository.saveTodo(event.todoModel);
-      yield TodoInitial();
+
+     await repository.saveTodo(event.todoModel);
+      yield TodoAddedState();
     } catch (e) {
       yield TodoErrorState(e.toString());
     }

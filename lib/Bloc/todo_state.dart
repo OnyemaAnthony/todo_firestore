@@ -32,4 +32,8 @@ class TodoErrorState extends TodoState {
   List<Object?> get props => [];
 }
 
+class TodoAddedState extends TodoState{
+  @override
+  List<Object?> get props => [];
 
+}

@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_firestore/Bloc/todo_bloc.dart';
 import 'package:todo_firestore/Repository/todo_repository.dart';
+import 'package:todo_firestore/Ui/home_screen.dart';
 import 'package:todo_firestore/Utilities/utilities.dart';
+import 'package:todo_firestore/model/TodoModel.dart';
 
+// ignore: must_be_immutable
 class AddTodoScreen extends StatelessWidget {
-
-  TextEditingController titleController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+ final TextEditingController titleController = TextEditingController();
+final  TextEditingController descriptionController = TextEditingController();
+  late TodoBloc todoBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +24,18 @@ class AddTodoScreen extends StatelessWidget {
         ),
         body: Builder(
           builder: (BuildContext context) {
-            return BlocBuilder<TodoBloc, TodoState>(
+            todoBloc = BlocProvider.of<TodoBloc>(context);
+            return BlocConsumer<TodoBloc, TodoState>(
+              listener: (context,state){
+                if(state is TodoAddedState){
+                  Utilities.pushReplace(context, HomeScreen());
+                }
+              },
               builder: (context, state) {
                 if (state is TodoInitial) {
-                  return buildAddTodoForm();
+                  return buildAddTodoForm(context);
                 } else if (state is TodoLoadingState) {
-                  return Utilities.showLoader('Fetching Todos');
+                  return Utilities.showProgressIncator();
                 } else if (state is TodoErrorState) {
                   Utilities.showToast(state.message);
                 }
@@ -38,12 +48,13 @@ class AddTodoScreen extends StatelessWidget {
     );
   }
 
-  Widget buildAddTodoForm() {
+  Widget buildAddTodoForm(BuildContext context) {
     return Column(
+      key: _formKey,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextFormField(
-          validator: (input)=> input!.isEmpty? 'Please enter a title':null,
+          validator: (input) => input!.isEmpty ? 'Please enter a title' : null,
           controller: titleController,
           textInputAction: TextInputAction.newline,
           keyboardType: TextInputType.multiline,
@@ -56,7 +67,8 @@ class AddTodoScreen extends StatelessWidget {
           height: 10,
         ),
         TextFormField(
-          validator: (input)=> input!.isEmpty? 'Please enter a description':null,
+          validator: (input) =>
+              input!.isEmpty ? 'Please enter a description' : null,
           controller: descriptionController,
           textInputAction: TextInputAction.newline,
           keyboardType: TextInputType.multiline,
@@ -70,7 +82,9 @@ class AddTodoScreen extends StatelessWidget {
           height: 20,
         ),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            submitTodo(context);
+          },
           child: Text(
             'Add Todo',
             style: TextStyle(color: Colors.white),
@@ -78,5 +92,19 @@ class AddTodoScreen extends StatelessWidget {
         )
       ],
     );
+  }
+
+  void submitTodo(BuildContext context) {
+      todoBloc.add(
+        SaveTodoEvent(
+          TodoModel(
+            title: titleController.text,
+            description: descriptionController.text,
+            updatedAt: DateTime.now(),
+            createdAt: DateTime.now(),
+          ),
+        ),
+      );
+
   }
 }

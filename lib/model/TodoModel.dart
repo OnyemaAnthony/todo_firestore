@@ -23,8 +23,8 @@ class TodoModel {
 
   TodoModel.fromFirestore(QueryDocumentSnapshot<Map<String, dynamic>>  todo)
       :  id = todo.id,
-        title = todo.data()!['title'],
-        description = todo.data()!['description'],
-        createdAt =todo.data()!['createdAt'].toDate(),
-        updatedAt =todo.data()!['updatedAt'].toDate();
+        title = todo.data()['title'],
+        description = todo.data()['description'],
+        createdAt =todo.data()['createdAt'].toDate(),
+        updatedAt =todo.data()['updatedAt'].toDate();
 }
