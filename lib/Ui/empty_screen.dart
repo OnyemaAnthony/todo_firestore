@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:todo_firestore/Ui/add_todo.dart';
+import 'package:todo_firestore/Utilities/utilities.dart';
 
 class EmptyScreen extends StatefulWidget {
   @override
@@ -15,11 +17,12 @@ class _EmptyScreenState extends State<EmptyScreen> {
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
-        onPressed: () {
+        backgroundColor: Theme.of(context).accentColor,
 
+        onPressed: () {
+         Utilities.pushReplace(context,AddTodoScreen());
         },
-        child: Icon(Icons.add),
+        child: Icon(Icons.add,color: Colors.white,),
       ),
       body: SingleChildScrollView(
         child: Container(
