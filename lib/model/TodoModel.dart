@@ -1,20 +1,30 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class TodoModel{
-
+class TodoModel {
   late String title;
+  late String id;
   late String description;
   late DateTime createdAt;
   late DateTime updatedAt;
 
-  TodoModel({required this.title,required this.description,required this.updatedAt,required this.createdAt});
+  TodoModel({required this.title,
+    required this.description,
+    required this.updatedAt,
+    required this.createdAt});
 
-  @override
-  String toString() {
-    return 'TodoModel{title: $title, description: $description, createdAt: $createdAt, updatedAt: $updatedAt}';
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'description': description,
+      'createdAt': FieldValue.serverTimestamp(),
+      'updatedAt': FieldValue.serverTimestamp(),
+    };
   }
 
-  @override
-  String toString() {
-    return 'TodoModel{title: $title, description: $description, createdAt: $createdAt, updatedAt: $updatedAt}';
-  }
+  TodoModel.fromFirestore(DocumentSnapshot todo)
+      :  id = todo.id,
+        title = (todo.data()['title'],
+        description = todo.data()['description'],
+        createdAt =todo.data()['createdAt'].toDate(),
+        updatedAt =todo.data()['updatedAt'].toDate();
 }
